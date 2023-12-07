@@ -4,7 +4,7 @@ const NewsRouter = express.Router()
 
 NewsRouter.get('/', async (req, res) => {
     try {
-        const {
+        let {
             topic
         } = req.body
         if (!topic) topic = "cryptocurrency"
