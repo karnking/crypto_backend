@@ -5,10 +5,11 @@ const NewsRouter = express.Router()
 NewsRouter.get('/', async (req, res) => {
     try {
         let {
-            topic
+            topic,
+            count
         } = req.body
         if (!topic) topic = "cryptocurrency"
-        const news = await fetch(`http://api.mediastack.com/v1/news?access_key=c30216ad085bd8098471ca4d3d6ddb74&keywords=${topic}&languages=en&limit=6`)
+        const news = await fetch(`http://api.mediastack.com/v1/news?access_key=c30216ad085bd8098471ca4d3d6ddb74&keywords=${topic}&languages=en&limit=${count}`)
             .then((res1) => {
                 return res1.json()
             })
