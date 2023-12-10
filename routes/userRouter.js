@@ -64,7 +64,7 @@ userRouter.post('/signup', async (req, res) => {
     }
 })
 
-userRouter.patch('/edit:id', async (req, res) => {
+userRouter.patch('/edit/:id', async (req, res) => {
     try {
         const user = await UserModel.findOne({
             _id: req.params.id
