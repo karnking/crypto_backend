@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const CryptoSchema = mongoose.model({
+const CryptoSchema = mongoose.Schema({
     name: String,
     image: String,
     bought_price: Number,
@@ -10,4 +10,6 @@ const CryptoSchema = mongoose.model({
     user_id: mongoose.ObjectId,
 })
 
-export const CryptoModel = mongoose.model("crypto", CryptoSchema)
+const CryptoModel = mongoose.model("crypto", CryptoSchema)
+
+module.exports = {CryptoModel}

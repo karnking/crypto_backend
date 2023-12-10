@@ -7,15 +7,14 @@ NewsRouter.get('/', async (req, res) => {
         let {
             topic,
             count
-        } = req.body
+        } = req.query
         if (!topic) topic = "cryptocurrency"
         const news = await fetch(`http://api.mediastack.com/v1/news?access_key=c30216ad085bd8098471ca4d3d6ddb74&keywords=${topic}&languages=en&limit=${count}`)
             .then((res1) => {
                 return res1.json()
             })
             .then((newsRes)=>{
-                console.log(newsRes)
-                res.status(200).send(newsRes)
+                res.status(200).send({data:newsRes.data.slice(0,count)})
             })
             .catch(() => {
                 res.status(308).send('Error Fetching')
