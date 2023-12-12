@@ -4,6 +4,7 @@ const cors = require('cors')
 const { userRouter } = require('./routes/userRouter')
 const { NewsRouter } = require('./routes/newsRouter')
 const { CryptoRouter } = require('./routes/cryptoRouter')
+const { CryptoModel } = require('./models/crypto.model')
 require('dotenv').config()
 
 const app = express()
@@ -18,6 +19,7 @@ app.get('/',(req,res)=>{
 app.use('/user',userRouter)
 app.use('/news',NewsRouter)
 app.use('/crypto',CryptoRouter)
+
 
 app.listen(process.env.PORT,async()=>{
     try{

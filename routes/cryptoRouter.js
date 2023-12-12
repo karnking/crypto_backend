@@ -1,11 +1,13 @@
 const express = require('express')
 const { CryptoModel } = require('../models/crypto.model')
+const { UserModel } = require('../models/user.model')
 
 const CryptoRouter = express.Router()
 
 CryptoRouter.post('/buy', async (req, res) => {
     try {
         const {
+            crypto_id,
             name,
             image,
             bought_price,
@@ -14,13 +16,14 @@ CryptoRouter.post('/buy', async (req, res) => {
             total_value,
             user_id
         } = req.body
-        const crypto_bought = await CryptoModel.findOne({user_id,name})
+        const crypto_bought = await CryptoModel.findOne({user_id,crypto_id})
         if(crypto_bought){
+            const {_id} = crypto_bought
             let newTokens = crypto_bought.tokens+tokens
             let newb = ((crypto_bought.bought_price * crypto_bought.tokens)+(tokens*bought_price))/newTokens
-            let total_value_n = newTokens*newb
+            let total_value_n = Math.round(newTokens*newb *100)/100
             const newCrypto = await CryptoModel.findByIdAndUpdate({
-              user_id,name  
+              _id
             },{tokens:newTokens,bought_price:newb,total_value:total_value_n})
             res.status(200).json(newCrypto)
         }else{
