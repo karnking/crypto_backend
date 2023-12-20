@@ -1,7 +1,5 @@
 const express = require('express')
-const {
-    PuzzleModel
-} = require('../models/puzzle.model')
+const { PuzzleModel } = require('../models/puzzle.model')
 
 const PuzzleRouter = express.Router()
 
@@ -32,6 +30,4 @@ PuzzleRouter.get('/allPuzzle', async (req, res) => {
     }
 })
 
-module.exports = {
-    PuzzleRouter
-}
+module.exports = { PuzzleRouter }
