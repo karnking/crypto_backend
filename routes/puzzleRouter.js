@@ -5,27 +5,20 @@ const {
 
 const PuzzleRouter = express.Router()
 
-PuzzleRouter.post('/buy', async (req, res) => {
+PuzzleRouter.post('/add', async (req, res) => {
     try {
-        const {
-            title,
-            desc,
-            hints,
-            options,
-            ans
-        } = req.body
-
         const newPuzzle = await PuzzleModel(req.body)
         newPuzzle.save()
         res.status(200).json(newPuzzle)
-} catch (err) {
-    console.log(err)
-    res.status(500).send("Internal Server Error")
-}
+    } catch (err) {
+        console.log(err)
+        res.status(500).send("Internal Server Error")
+    }
 })
 PuzzleRouter.get('/allPuzzle', async (req, res) => {
     try {
         const Puzzles = await PuzzleModel.find({})
+        console.log(Puzzles)
         if (Puzzles.length > 0) res.status(200).json({
             Puzzles
         })
