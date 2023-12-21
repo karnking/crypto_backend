@@ -1,16 +1,23 @@
 const express = require('express')
-const { PuzzleModel } = require('../models/puzzle.model')
+const {
+    PuzzleModel
+} = require('../models/puzzle.model')
 
 const PuzzleRouter = express.Router()
 
 PuzzleRouter.post('/add', async (req, res) => {
     try {
-        if(req.body.ans.length==0) res.status(401).send("All details not given");
-        else{
-            const newPuzzle = await PuzzleModel(req.body)
-            const resp = await newPuzzle.save()
-            console.log(newPuzzle,resp)
-            res.status(200).json(newPuzzle)
+        if (req.body.ans.length == 0) res.status(401).send("All details not given");
+        else {
+            const puzzles = await PuzzleModel.find({})
+            const already_present = puzzles.filter(ele => ele.title == req.body.title)
+            if (already_present.length > 0) {
+                res.status(409).send("Already Exist");
+            } else {
+                const newPuzzle = await PuzzleModel(req.body)
+                const resp = await newPuzzle.save()
+                res.status(200).json(newPuzzle)
+            }
         }
     } catch (err) {
         console.log(err)
@@ -30,4 +37,6 @@ PuzzleRouter.get('/allPuzzle', async (req, res) => {
     }
 })
 
-module.exports = { PuzzleRouter }
+module.exports = {
+    PuzzleRouter
+}
